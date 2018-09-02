@@ -3,6 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+
+/*Including App config file*/
+var appConfig = require('./bin/AppConfig');
+
+mongoose.connect(appConfig.DBServer.mongoUrl);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    // we're connected!
+    console.log("Connected to mongo server");
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
