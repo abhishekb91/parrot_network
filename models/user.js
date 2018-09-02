@@ -1,6 +1,7 @@
-var mongoose        = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var Schema          = mongoose.Schema;
+var mongoose                = require('mongoose');
+var uniqueValidator         = require('mongoose-unique-validator');
+var Schema                  = mongoose.Schema;
+var passportLocalMongoose   = require('passport-local-mongoose');
 
 var UserSchema = new Schema({
     username: {
@@ -39,5 +40,7 @@ UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
 UserSchema.methods.getName = function () {
     return (this.firstname + ' ' + this.lastname);
 };
+
+UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema);
